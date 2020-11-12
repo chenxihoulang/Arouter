@@ -1,12 +1,15 @@
 package com.alibaba.android.arouter.register.launch
 
+import com.alibaba.android.arouter.register.extension.MyExtension
 import com.alibaba.android.arouter.register.utils.Logger
 import com.android.build.gradle.AppExtension
 import com.android.build.gradle.AppPlugin
 import com.alibaba.android.arouter.register.utils.ScanSetting
 import com.alibaba.android.arouter.register.core.RegisterTransform
+import com.android.build.gradle.LibraryPlugin
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+
 /**
  * Simple version of AutoRegister plugin for ARouter
  * @author billy.qi email: qiyilike@163.com
@@ -17,6 +20,8 @@ public class PluginLaunch implements Plugin<Project> {
     @Override
     public void apply(Project project) {
         def isApp = project.plugins.hasPlugin(AppPlugin)
+        def isLib = project.plugins.hasPlugin(LibraryPlugin)
+
         //only application module needs this plugin to generate register code
         if (isApp) {
             Logger.make(project)
@@ -34,6 +39,14 @@ public class PluginLaunch implements Plugin<Project> {
             RegisterTransform.registerList = list
             //register this plugin
             android.registerTransform(transformImpl)
+        }
+
+        def extension = project.getExtensions().create('myExt', MyExtension)
+        project.beforeEvaluate {
+            println("project.beforeEvaluate:" + project.getName())
+        }
+        project.afterEvaluate {
+            println("Hello from " + extension.toString())
         }
     }
 

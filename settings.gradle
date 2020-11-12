@@ -1,3 +1,4 @@
+include ':plugin'
 include ':app'
 include ':arouter-api'
 include ':arouter-compiler'

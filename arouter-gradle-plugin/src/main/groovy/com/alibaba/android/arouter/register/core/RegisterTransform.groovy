@@ -36,12 +36,17 @@ class RegisterTransform extends Transform {
         return ScanSetting.PLUGIN_NAME
     }
 
+    /**
+     * 指定 Transform 要处理的数据类型，例如：处理编译后的字节码或者标准的 Java 资源；
+     * @return
+     */
     @Override
     Set<QualifiedContent.ContentType> getInputTypes() {
         return TransformManager.CONTENT_CLASS
     }
 
     /**
+     * 指定 Transform 的作用域，例如：只处理当前项目、只处理子项目等
      * The plugin will scan all classes in the project
      * @return
      */
@@ -56,6 +61,16 @@ class RegisterTransform extends Transform {
     }
 
 
+    /**
+     * 处理字节码文件流的切入点,transform 完成接收流、处理流、输出流的过程
+     * @param context
+     * @param inputs 是指输入文件的抽象，它包含 DirectoryInput 集合（代表以源码方式参与项目编译的所有目录结构及其目录下的源码文件）
+     * 与 JarInput 集合（以 jar 包方式参与项目编译的所有本地 jar 包和远程 jar 包）两部分
+     * @param referencedInputs
+     * @param outputProvider 是指 Transform 的输出，通过它可以获取输出路径
+     * @param isIncremental
+     * @throws IOException* @throws TransformException* @throws InterruptedException
+     */
     @Override
     void transform(Context context, Collection<TransformInput> inputs
                    , Collection<TransformInput> referencedInputs
@@ -100,7 +115,7 @@ class RegisterTransform extends Transform {
                     if (!leftSlash) {
                         path = path.replaceAll("\\\\", "/")
                     }
-                    if(file.isFile() && ScanUtil.shouldProcessClass(path)){
+                    if (file.isFile() && ScanUtil.shouldProcessClass(path)) {
                         ScanUtil.scanClass(file)
                     }
                 }
@@ -129,4 +144,5 @@ class RegisterTransform extends Transform {
 
         Logger.i("Generate code finish, current cost time: " + (System.currentTimeMillis() - startTime) + "ms")
     }
+
 }

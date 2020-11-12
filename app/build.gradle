@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.alibaba.arouter'
+apply plugin: 'apk.change.name'
 
 android {
     compileSdkVersion Integer.parseInt(COMPILE_SDK_VERSION)
@@ -9,6 +10,13 @@ android {
         minSdkVersion Integer.parseInt(MIN_SDK_VERSION)
         targetSdkVersion Integer.parseInt(TARGET_SDK_VERSION)
         versionName "0.0.1"
+    }
+
+    applicationVariants.each { variant ->
+        variant.outputs.each { output ->
+            def file = output.outputFile
+            outputFileName = "${variant.name}-${variant.versionName}-" + System.currentTimeMillis() + ".apk"
+        }
     }
 
     compileOptions {
