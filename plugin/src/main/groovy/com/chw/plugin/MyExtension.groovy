@@ -1,4 +1,4 @@
-package com.alibaba.android.arouter.register.extension;
+package com.chw.plugin;
 
 /**
  * @author ChaiHongwei* @date 2020-11-12 10:25

@@ -2,6 +2,11 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.alibaba.arouter'
 apply plugin: 'apk.change.name'
 
+myExt {
+    extName = "chw"
+    version = 1
+}
+
 android {
     compileSdkVersion Integer.parseInt(COMPILE_SDK_VERSION)
     buildToolsVersion BUILDTOOLS_VERSION

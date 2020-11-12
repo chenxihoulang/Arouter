@@ -27,6 +27,15 @@ public class ApkChangeNamePlugin implements Plugin<Project> {
                     outputFileName = "${variant.name}-${variant.versionName}-" + System.currentTimeMillis() + ".apk"
                 }
         }
+
+        project.task('customTask', type: CustomTask)
+        def extension = project.extensions.create('myExt', MyExtension)
+        project.beforeEvaluate {
+            println("project.beforeEvaluate:" + project.getName())
+        }
+        project.afterEvaluate {
+            println("Hello from " + extension.toString())
+        }
     }
 }
 
